@@ -26,6 +26,7 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
+
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
@@ -57,7 +58,7 @@
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
           <ul class="nav navbar-nav">
-            <li> <a href="<?php echo urlnoticias?>/inserir_noticias.php" target="_blank">Painel</a></li>
+            <li> <a id="linktopainel" target="_blank">Painel</a></li>
 
             <!-- Messages: style can be found in dropdown.less-->
             <!-- /.messages-menu -->
@@ -150,8 +151,16 @@
 <script>
 
 $(function(){
-  var url = '<?php echo urlnoticias ?>'
+
+  var protocolo = location.protocol;
+  var dominio = document.domain;
+  var url = protocolo + '//' +  dominio + ':' + <?php echo portanoticias ?>;
   var endereco = url+"/noticias.php";
+  
+  caminhoinserirnoticia = protocolo + '//' +  dominio + ':<?php echo portanoticias ?>/inserir_noticias.php'
+  document.getElementById("linktopainel").setAttribute("href",caminhoinserirnoticia);
+
+
   $.get(endereco,function(data){
 
     var template = $(".content-noticia");

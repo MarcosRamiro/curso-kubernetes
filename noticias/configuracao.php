@@ -1,4 +1,5 @@
 <?php
 # URL DO SISTEMA DE NOTICIAS
-const urlnoticias = 'http://localhost:8587/';
+const urlnoticias = 'http://localhost:8081/';
+const portanoticias = '8081';
 ?>
