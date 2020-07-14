@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: nfs-pv-sessoes
+   labels:
+     name: nfs-pv-sessoes
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+     - ReadWriteMany
+  nfs:
+     server: 192.168.0.103
+     path: "/mnt/nfs_share/sessoes"

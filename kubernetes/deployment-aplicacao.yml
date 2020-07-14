@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: aplicacao-noticia-deployment
+spec:
+   replicas: 2
+   selector: 
+      matchLabels:
+         name: aplicacao-noticia-pod
+   template:
+      metadata:
+         labels:
+           name: aplicacao-noticia-pod
+      spec:
+        containers:
+        - name: container-aplicacao
+          image: ramimar/noticia-alura:v2
+          ports:
+          - containerPort: 80
