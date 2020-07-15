@@ -66,7 +66,7 @@ metadata:
    name: aplicacao-sistema-statefulset
 spec:
    serviceName: aplicacao-sistema-statefulset     
-   replicas: 5
+#  replicas: 5
    selector: 
       matchLabels:
          name: aplicacao-sistema-pod-statefulset
@@ -76,10 +76,19 @@ spec:
            name: aplicacao-sistema-pod-statefulset
       spec:
         containers:
-        - name: container-aplicacao-sistema-statefulset
-          image: ramimar/sistema-noticia-alura:v1
+        - name: container-aplicacao-sistema-statefulset-v2
+          image: ramimar/sistema-noticia-alura:v2
+          resources:
+            limits:
+               cpu: 500m
+            requests:
+               cpu: 300m
           ports:
           - containerPort: 80
+          lifecycle:
+            postStart:
+               exec:
+                 command: ["sh", "enviarMensagem.sh"]
           volumeMounts:
             - name: imagens
               mountPath: /var/www/html/uploads
@@ -107,3 +116,17 @@ spec:
       nodePort: 31600
   selector:
     name: aplicacao-sistema-pod-statefulset
+---
+
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: aplicacao-sistema-autoscaling
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: aplicacao-sistema-statefulset
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 20
